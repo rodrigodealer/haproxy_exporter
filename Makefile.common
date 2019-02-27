@@ -31,6 +31,7 @@ FIRST_GOPATH := $(firstword $(subst :, ,$(shell $(GO) env GOPATH)))
 GOOPTS       ?=
 GOHOSTOS     ?= $(shell $(GO) env GOHOSTOS)
 GOHOSTARCH   ?= $(shell $(GO) env GOHOSTARCH)
+GOOS         ?= linux
 
 GO_VERSION        ?= $(shell $(GO) version)
 GO_VERSION_NUMBER ?= $(word 3, $(GO_VERSION))
@@ -172,7 +173,7 @@ endif
 .PHONY: common-build
 common-build: promu
 	@echo ">> building binaries"
-	GO111MODULE=$(GO111MODULE) $(PROMU) build --prefix $(PREFIX)
+	GO111MODULE=$(GO111MODULE) GOOS=$(GOOS) $(PROMU) build --prefix $(PREFIX)
 
 .PHONY: common-tarball
 common-tarball: promu
